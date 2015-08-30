@@ -1,0 +1,60 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace StandardDeviation
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.WriteLine("Alrighty let's get started. How many values will there be?");
+            int count;
+            int.TryParse(Console.ReadLine(), out count);
+            Console.WriteLine("Ok, so there are {0} values", count);
+            double[] table = new double[count];
+            Console.WriteLine("Enter your values and press Enter after every one.");
+            for(int i=0; i<count; i++)
+            {
+                double tempnum;
+                double.TryParse(Console.ReadLine(),out tempnum);
+                table[i]= tempnum;
+            }
+            double avg = mean(count,table);
+            Console.WriteLine("The average is " + avg);
+            Console.WriteLine("The standard deviation is " + standev(avg,table,count));
+            
+            Console.WriteLine("Press Enter to close.");
+            Console.ReadLine();
+
+        }
+        static double mean(int count, double []table )
+        {
+            double sum = 0.0;
+            for (int i = 0; i < count; i++)
+                sum += table[i];
+            double avg = sum / count;
+            return avg;
+        }
+        static double standev(double avg, double[] table, int count)
+        {
+            double[] holders = new double[count];
+            double summation = 0.0;
+            for (int i = 0; i < count;i++ )
+            {
+                double value = table[i]-avg;
+                holders[i] = value * value;
+            }
+            for (int s = 0; s < count;s++ )
+            {
+                summation += holders[s];
+            }
+            double insq = 0.0;
+            insq = summation / (count - 1);
+            double ans = Math.Sqrt(insq);
+            return ans;
+        }
+    }
+}
